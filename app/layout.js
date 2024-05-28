@@ -16,7 +16,6 @@ const RootLayout = ({ children }) => {
       <body>
         <Provider>
           <div className="main">
-            <div className="bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500"/>
           </div>
           
           <main className="app">
