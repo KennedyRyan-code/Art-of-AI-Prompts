@@ -12,7 +12,7 @@ const handler = NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
     ],
-    callback: {
+    callback: { // callback functions to run after signing in or creating a session
         // create a user in the database when they sign in
         async signIn({ profile }) {
             try {
