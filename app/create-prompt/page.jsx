@@ -13,7 +13,7 @@ const CreatePrompt = () => {
         tag: "",
     });
 
-    const CreatePrompt = async (e) => {
+    const createPrompt = async (e) => {
     };
  
   return (
@@ -22,7 +22,7 @@ const CreatePrompt = () => {
         post={post}
         setPost={setPost}
         submitting={submitting}
-        handleSubmit={CreatePrompt}
+        handleSubmit={createPrompt}
     />
   )
 }
