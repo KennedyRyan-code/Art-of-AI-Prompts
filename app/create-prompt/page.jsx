@@ -9,6 +9,7 @@ import Form from '@components/Form';
 const CreatePrompt = () => {
   const router = useRouter();
   const { data: session } = useSession();
+  console.log(session?.user.id); // Log the user id to the console(undifined!!)
 
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
@@ -26,7 +27,7 @@ const CreatePrompt = () => {
           body: JSON.stringify({
             prompt: post.prompt,
             tag: post.tag,
-            userId: session?.user.id
+            userId: session?.user?.id
           }),
         });
 
@@ -35,6 +36,8 @@ const CreatePrompt = () => {
         }
       } catch (error) {
         console.error('An unexpected error happened:', error);        
+      } finally {
+        setSubmitting(false);
       }
     };
  
