@@ -7,7 +7,8 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 const Nav = () => {
     const { data: session } = useSession();  // Get the session object
     //const isUserLoggedIn = session ? true : false;  // Check if the user is logged in
-
+    
+    console.log(session?.user.id);  // Log the user id to the console (undefined!!!)
     const [ providers, setProviders ] = useState(null);
     const [ toggleDropdown, setToggleDropdown ] = useState(false);
 

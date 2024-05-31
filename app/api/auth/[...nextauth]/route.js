@@ -13,8 +13,15 @@ const handler = NextAuth({
         }),
     ],
     callback: { // callback functions to run after signing in or creating a session
+        // add user id from MongoDB to session
+        async session({ session }) {
+            const sessionUser = await User.findOne({ email: session.user.email }); // find user in database
+            session.user.id = sessionUser._id.toString(); // add user id to session
+
+            return session;
+        },
         // create a user in the database when they sign in
-        async signIn({ profile }) {
+        async signIn({ account, profile, user, credentials }) {
             try {
                 await connectToDatabase();
                 // check if user exists in database
@@ -36,13 +43,8 @@ const handler = NextAuth({
             }
             
         },
-        async session({ session }) {
-            const sessionUser = await User.findOne({ email: session.user.email }); // find user in database
-            session.user.id = sessionUser._id.toString(); // add user id to session
-
-            return session;
-        },
-    },
+        
+    }
 });
 
 export { handler as GET, handler as POST};
