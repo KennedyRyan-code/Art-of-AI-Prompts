@@ -25,10 +25,11 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
       <div className='flex justify-between items-start gap-5'>
         <div className='flex-1 flex justify-start items-center gap-3 cursor-pointer'>
           <Image
-            src="/assets/images/logo.svg"  // TODO: image of the user: post.creator not defined!!!
+            src="/assets/images/logo.svg"    //{post.creator?.image}  // TODO: image of the user: post.creator not defined!!!
             alt='User_image'
             width={25}
             height={25}
+            priority={true}
             className='rounded-full object-contain'
           />
           <div className='flex flex-col'>
@@ -61,4 +62,4 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   )
 }
 
-export default PromptCard
+export default PromptCard;
