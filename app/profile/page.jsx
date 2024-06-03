@@ -9,8 +9,7 @@ import Profile from '@components/Profile';
 const MyProfile = () => {
     const { data: session } = useSession(); // get the session data
     const [posts, setPosts] = useState([]); // state to store the posts
-
-console.log(session?.user.id);  // Log the user id to the console (undefined!!!)     
+     
 
 useEffect(() => {
          // fetch data from the server
@@ -35,7 +34,7 @@ useEffect(() => {
   return (
     <Profile 
         name="My"
-        desc="Wellcome to your personalized profile page."
+        desc="Welcome to your personalized profile page."
         data={posts}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
