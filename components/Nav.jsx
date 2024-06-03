@@ -39,7 +39,7 @@ const Nav = () => {
                         Create Prompt
                     </Link>
                     <Link href="/profile" className="black_btn"> 
-                        <Image src={session?.user.image || "/assets/images/logo.svg"}
+                        <Image src={session.user.image || "/assets/images/logo.svg"}
                             alt="Profile"
                             width={30}
                             height={30}
@@ -67,7 +67,7 @@ const Nav = () => {
             {session?.user ? (
                 <div className="flex">
                     <Image
-                        src={session?.user.image || "/assets/images/logo.svg"}
+                        src={session.user.image || "/assets/images/logo.svg"}
                         alt="Profile"
                         width={30}
                         height={30}

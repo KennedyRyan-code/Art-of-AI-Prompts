@@ -4,12 +4,10 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
-import { set } from 'mongoose';
+
 
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
-  const { data: session } = useSession();
-  const router = useRouter();
 
   const [copied, setCopied] = useState("");
 
@@ -25,7 +23,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
       <div className='flex justify-between items-start gap-5'>
         <div className='flex-1 flex justify-start items-center gap-3 cursor-pointer'>
           <Image
-            src="/assets/images/logo.svg"    //{post.creator?.image}  // TODO: image of the user: post.creator not defined!!!
+            src={post.creator?.image || "/assets/images/logo.svg"}  // TODO: image of the user: post.creator not defined!!!
             alt='User_image'
             width={25}
             height={25}
@@ -34,8 +32,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
           />
           <div className='flex flex-col'>
             <h3 className='font-satoshi font-semibold text-gray-300'>
-              {/* {post?.creator?.username}  post.creator not defined!!!*/}
-              Creator's Name
+              {post.creator?.username || "AI-Powered"}
             </h3>
             <p className='text-sm text-gray-400'>
               {new Date(post.createdAt).toDateString()}
