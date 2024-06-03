@@ -8,7 +8,6 @@ const Nav = () => {
     const { data: session } = useSession();  // Get the session object
     //const isUserLoggedIn = session ? true : false;  // Check if the user is logged in
     
-    console.log(session?.user.id);  // Log the user id to the console (undefined!!!)
     const [ providers, setProviders ] = useState(null);
     const [ toggleDropdown, setToggleDropdown ] = useState(false);
 
@@ -40,7 +39,7 @@ const Nav = () => {
                         Create Prompt
                     </Link>
                     <Link href="/profile" className="black_btn"> 
-                        <Image src={session.user.image || "/assets/images/logo.svg"}
+                        <Image src={session?.user.image || "/assets/images/logo.svg"}
                             alt="Profile"
                             width={30}
                             height={30}
@@ -68,7 +67,7 @@ const Nav = () => {
             {session?.user ? (
                 <div className="flex">
                     <Image
-                        src={session.user.image || "/assets/images/logo.svg"}
+                        src={session?.user.image || "/assets/images/logo.svg"}
                         alt="Profile"
                         width={30}
                         height={30}
