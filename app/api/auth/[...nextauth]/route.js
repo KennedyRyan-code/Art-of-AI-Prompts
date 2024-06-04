@@ -12,11 +12,32 @@ const handler = NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
     ],
-    callback: { // callback functions to run after signing in or creating a session
+    callbacks: { // callback functions to run after signing in or creating a session
+        // add user id from MongoDB to session
+        async session({ session }) {
+            console.log('Session before adding user id', session);
+
+            try {
+                await connectToDatabase(); // Ensure the database is connected
+                const sessionUser = await User.findOne({ email: session.user.email }); // find user in database
+                if (sessionUser) {
+                    session.user.id = sessionUser._id.toString(); // add user id to session
+
+                } else {
+                    console.log("User not found in database");
+                }
+            } catch (error) {
+                console.error("Error finding user in database", error);
+            }
+
+            console.log('Session after adding user id', session); // log the session data to verify
+            return session;
+        },
         // create a user in the database when they sign in
-        async signIn({ profile }) {
+        async signIn({ account, profile, user, credentials }) {
             try {
                 await connectToDatabase();
+                console.log('Profile', profile); // log the profile data for verification
                 // check if user exists in database
                 const userExists = await User.findOne({ email: profile.email });
 
@@ -25,8 +46,15 @@ const handler = NextAuth({
                     await User.create({
                         email: profile.email,
                         username: profile.name.replace(" ", "").toLowerCase(), // remove spaces and convert to lowercase
-                        image: profile.image,
+                        image: profile.picture,
                     });
+                } else {
+                    // update the image if it doesn't exist or has changed
+                    if (!userExists.image || userExists.image !== profile.picture) {
+                        userExists.image = profile.picture;
+                        await userExists.save();
+                        console.log("User image updated:", userExists.image);
+                    }
                 }
                 return true;   
             } catch (error) {
@@ -36,13 +64,8 @@ const handler = NextAuth({
             }
             
         },
-        async session({ session }) {
-            const sessionUser = await User.findOne({ email: session.user.email }); // find user in database
-            session.user.id = sessionUser._id.toString(); // add user id to session
-
-            return session;
-        },
-    },
+        
+    }
 });
 
 export { handler as GET, handler as POST};
