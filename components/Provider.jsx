@@ -1,8 +1,12 @@
-import React from 'react'
+"use client";
+import { SessionProvider } from 'next-auth/react';
 
-const Provider = () => {
+// Configure shared session state for all components in the app
+const Provider = ({children, session}) => {
   return (
-    <div>Provider</div>
+    <SessionProvider session={session}>
+        {children}
+    </SessionProvider>
   )
 }
 
